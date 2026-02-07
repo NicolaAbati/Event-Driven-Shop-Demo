@@ -1,0 +1,5 @@
+@OrdersService_HostAddress = http://localhost:8080
+POST {{OrdersService_HostAddress}}/test/
+Accept: application/json
+
+###
