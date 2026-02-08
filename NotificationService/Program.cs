@@ -23,8 +23,19 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
-var app = builder.Build();
+// CORS Configuration to allow requests from the API Gateway
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5000") // App Gateway
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
+var app = builder.Build();
+app.UseCors();
 app.MapNotificationsEndpoints();
 
 // Configure the HTTP request pipeline.

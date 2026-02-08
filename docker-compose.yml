@@ -1,18 +1,25 @@
 services:
+  apigateway:
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - "5000:8080"
   ordersservice:
     image: ${DOCKER_REGISTRY-}ordersservice
     build:
       context: .
       dockerfile: OrdersService/Dockerfile
     ports:
-      - "5000:8080"
+      - "5001:8080"
   notificationservice:
     image: ${DOCKER_REGISTRY-}notificationservice
     build:
       context: .
       dockerfile: NotificationService/Dockerfile
     ports:
-      - "5001:8080"
+      - "5002:8080"
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
