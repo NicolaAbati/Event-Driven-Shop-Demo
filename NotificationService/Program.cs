@@ -1,15 +1,18 @@
 using MassTransit;
 using NotificationService.Application.Interfaces;
 using NotificationService.Infrastructure;
-using NotificationService.Presentation.Consumers;
+using NotificationService.Presentation.API.Notifications;
+using NotificationService.Presentation.Consumers.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<INotificationRepository, InMemoryNotificationRepository>();
+
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<OrderCreatedConsumer>();
@@ -22,16 +25,14 @@ builder.Services.AddMassTransit(x =>
 
 var app = builder.Build();
 
-app.MapGet("/notifications", (INotificationRepository repo) =>
-{
-    return repo.GetLast(10);
-});
+app.MapNotificationsEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-
 
 app.Run();

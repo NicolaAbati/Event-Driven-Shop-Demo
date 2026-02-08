@@ -1,4 +1,4 @@
-﻿namespace NotificationService.Presentation.Consumers;
+﻿namespace NotificationService.Presentation.Consumers.Orders;
 
 using MassTransit;
 using NotificationService.Application.Interfaces;
